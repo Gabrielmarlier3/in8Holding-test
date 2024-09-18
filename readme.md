@@ -1,4 +1,4 @@
-# Web Scraping e-Commerce
+# Teste para In8 Holding
 
 Este projeto realiza a raspagem de dados de um site de e-commerce, processa os dados e os armazena em um banco de dados. Ele também fornece uma API para acessar e filtrar os dados armazenados.
 
