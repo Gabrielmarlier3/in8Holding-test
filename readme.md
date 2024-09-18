@@ -42,7 +42,7 @@ Este projeto realiza a raspagem de dados de um site de e-commerce, processa os d
 
 Para iniciar os serviços necessários, execute:
 ```bash
-docker-compose up -d
+docker-compose up --build
 ```
 
 ### Sincronizar Dados

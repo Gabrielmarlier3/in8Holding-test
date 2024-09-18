@@ -62,7 +62,7 @@ const processData = async (data, chunkSize = 30, ramUse = 3000) => {
 
             const swatchesPrices = [];
             const ramUsePerTab = ramUse / chunkSize;
-            const browser = await puppeteer.launch({ headless: true, args: [`--max-old-space-size=${ramUsePerTab}`] });
+            const browser = await puppeteer.launch({ headless: true, args: [`--max-old-space-size=${ramUsePerTab}`, '--no-sandbox', '--disable-setuid-sandbox'] });
             const page = await browser.newPage();
             await page.goto(url);
 

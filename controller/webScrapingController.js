@@ -23,7 +23,7 @@ const getProducts = async (req, res) => {
         return res.json({ message, data });
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Erro ao acessar o banco de dados');
+        return res.status(500).send('Erro ao acessar o banco de dados, Tente executar /sync para sincronizar os dados');
     }
 }
 
