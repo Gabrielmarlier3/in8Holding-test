@@ -42,39 +42,46 @@ const processData = async (data) => {
     const chunkSize = 30;
     const results = [];
 
-    // Retrieve all previously processed data
+    // Pega todos os dados do banco de dados para posteriormente filtrar somente os que não estão salvos assim evitando duplicatas e deixando o processo mais rápido
     const processedData = await getAllData();
 
-    // Create a Set of processed links for quick lookup
+    //crio um set com os links dos dados processados
     const processedLinks = new Set(processedData.map(item => item.link));
 
-    // Filter out data that has already been processed
+    // filtro aqui somente os que não contem no set de links processados
     const unprocessedData = data.filter(item => {
         const url = `https://webscraper.io${item.link}`;
         return !processedLinks.has(url);
     });
 
+    // Loop para cada item coletado e processado
     for (let i = 0; i < unprocessedData.length; i += chunkSize) {
-        const chunk = unprocessedData.slice(i, i + chunkSize); // Divide data into chunks
+        // Divide data into chunks deixando a aplicação menos pesada
+        const chunk = unprocessedData.slice(i, i + chunkSize);
+
+        //promise para cada item para que sejam processados ao mesmo tempo acelerando o processo
         const pageDataPromises = chunk.map(async (item) => {
             const url = `https://webscraper.io${item.link}`;
             const res = await axios.get(url);
             const $ = cheerio.load(res.data);
 
             const swatchesPrices = [];
-            const ramUsePerTab = ramUse / chunkSize;
+            const ramUsePerTab = ramUse / chunk.length;
             const browser = await puppeteer.launch({
                 headless: true,
+                //esses args são  para que o puppeteer funcione corretamente no docker
                 args: [`--max-old-space-size=${ramUsePerTab}`, '--no-sandbox', '--disable-setuid-sandbox']
             });
             const page = await browser.newPage();
             await page.goto(url);
 
+            // Aguarda o carregamento do seletor, para que futuramente consigo pegar o preço de cada notebook com base no armazenamento
             const swatches = await page.$$eval('.swatches button:not([disabled])', buttons => buttons.map(btn => ({
                 value: btn.value,
                 isActive: btn.classList.contains('active')
             })));
 
+            //aqui eu clico em cada botão de armazenamento e pego o preço de cada um
             for (const swatch of swatches) {
                 await page.click(`.swatches button[value="${swatch.value}"]`);
                 await page.waitForSelector('.price.float-end.pull-right');
@@ -102,10 +109,11 @@ const processData = async (data) => {
                 starCount: starCount,
             };
         });
-
+        //espero todos os itens serem processados, e então adiciono ao array de resultados
         const chunkResults = await Promise.all(pageDataPromises);
         results.push(...chunkResults);
     }
+
 
     return results;
 };
