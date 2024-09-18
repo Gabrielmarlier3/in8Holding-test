@@ -30,15 +30,16 @@ const fetchData = async () => {
     const data = [];
     $('a.title').each((index, element) => {
         data.push({
-            title: $(element).attr('title'),
-            link: $(element).attr('href'),
+            title: $(element).attr('title'), link: $(element).attr('href'),
         });
     });
 
     return data;
 };
 
-const processData = async (data, chunkSize = 30, ramUse = 3000) => {
+const processData = async (data) => {
+    const ramUse = 3000
+    const chunkSize = 30;
     const results = [];
 
     // Retrieve all previously processed data
@@ -62,19 +63,23 @@ const processData = async (data, chunkSize = 30, ramUse = 3000) => {
 
             const swatchesPrices = [];
             const ramUsePerTab = ramUse / chunkSize;
-            const browser = await puppeteer.launch({ headless: true, args: [`--max-old-space-size=${ramUsePerTab}`, '--no-sandbox', '--disable-setuid-sandbox'] });
+            const browser = await puppeteer.launch({
+                headless: true,
+                args: [`--max-old-space-size=${ramUsePerTab}`, '--no-sandbox', '--disable-setuid-sandbox']
+            });
             const page = await browser.newPage();
             await page.goto(url);
 
-            const swatches = await page.$$eval('.swatches button:not([disabled])', buttons =>
-                buttons.map(btn => ({ value: btn.value, isActive: btn.classList.contains('active') }))
-            );
+            const swatches = await page.$$eval('.swatches button:not([disabled])', buttons => buttons.map(btn => ({
+                value: btn.value,
+                isActive: btn.classList.contains('active')
+            })));
 
             for (const swatch of swatches) {
                 await page.click(`.swatches button[value="${swatch.value}"]`);
                 await page.waitForSelector('.price.float-end.pull-right');
                 const price = await page.$eval('.price.float-end.pull-right', el => parseFloat(el.textContent.trim().replace('$', '')));
-                swatchesPrices.push({ value: parseInt(swatch.value, 10), price });
+                swatchesPrices.push({value: parseInt(swatch.value, 10), price});
             }
 
             await browser.close();
@@ -106,4 +111,4 @@ const processData = async (data, chunkSize = 30, ramUse = 3000) => {
 };
 
 
-module.exports = { fetchData, processData };
+module.exports = {fetchData, processData};

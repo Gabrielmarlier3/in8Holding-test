@@ -3,7 +3,6 @@ const {saveAllDataToDatabase, getFilteredData} = require("../service/databaseSer
 
 const syncData = async (req, res) => {
     try {
-        const filter = req.query.filter || 'Lenovo';
         const allData = await dataService.fetchData();
         const processedData = await dataService.processData(allData);
         await saveAllDataToDatabase(processedData);
@@ -23,7 +22,7 @@ const getProducts = async (req, res) => {
         return res.json({ message, data });
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Erro ao acessar o banco de dados, Tente executar /sync para sincronizar os dados');
+        return res.status(500).send('Erro ao acessar o banco de dados, Verifique a url ou tente executar /sync para sincronizar os dados');
     }
 }
 

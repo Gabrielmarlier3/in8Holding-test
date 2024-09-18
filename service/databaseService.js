@@ -1,4 +1,4 @@
-const { createConnection } = require("../db");
+const {createConnection} = require("../db");
 
 // Função para garantir que a tabela 'products' exista
 const ensureProductsTableExists = async () => {
@@ -109,4 +109,4 @@ const getAllData = async () => {
     }
 };
 
-module.exports = { saveAllDataToDatabase, getFilteredData, getAllData };
+module.exports = {saveAllDataToDatabase, getFilteredData, getAllData};
