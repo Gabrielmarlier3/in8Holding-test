@@ -15,7 +15,7 @@ services:
       PORT: ${PORT}
 
   db:
-    image: mysql:5.7
+    image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
