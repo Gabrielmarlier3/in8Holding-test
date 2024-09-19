@@ -4,6 +4,10 @@ const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 const {getAllData} = require("./databaseService");
 
+/**
+ * Realiza web scraping em um site de e-commerce
+ * @returns {Promise<{title: string, link: string}[]>} - Retorna um array de objetos com os dados coletados, contendo titulo e link
+ */
 const fetchData = async () => {
     const initialRes = await axios.get('https://webscraper.io/test-sites/e-commerce/static/computers/laptops');
     const $initial = cheerio.load(initialRes.data);
@@ -37,11 +41,27 @@ const fetchData = async () => {
     return data;
 };
 
-const processData = async (data) => {
-    const ramUse = 3000
-    const chunkSize = 30;
-    const results = [];
+/**
+ * Pega os dados provindos do fetchData e processa os dados pegando as informaçoes de cada notebook
+ * @param {{title: string, link: string}[]} data - Dados coletados pelo fetchData
+ * @param {number} chunkSize - Tamanho do chunk, ou seja quantidade de sites que serão processados ao mesmo tempo
+ *
+ * @returns {Promise<{
+ *   title: string,
+ *   link: string,
+ *   swatchesPrices: {
+ *      price: string,
+ *      capacity: string
+ *      }[],
+ *   reviewCount: number,
+ *   starCount: number,
+ *   min_price: string
+ * }[]>} - Retorna um array de objetos contendo os valores acima
+ * */
 
+const processData = async (data, chunkSize) => {
+    const results = [];
+    const ramUse = 3000
     // Pega todos os dados do banco de dados para posteriormente filtrar somente os que não estão salvos assim evitando duplicatas e deixando o processo mais rápido
     const processedData = await getAllData();
 
@@ -77,16 +97,15 @@ const processData = async (data) => {
 
             // Aguarda o carregamento do seletor, para que futuramente consigo pegar o preço de cada notebook com base no armazenamento
             const swatches = await page.$$eval('.swatches button:not([disabled])', buttons => buttons.map(btn => ({
-                value: btn.value,
-                isActive: btn.classList.contains('active')
+                capacity: btn.value, isActive: btn.classList.contains('active')
             })));
 
             //aqui eu clico em cada botão de armazenamento e pego o preço de cada um
             for (const swatch of swatches) {
-                await page.click(`.swatches button[value="${swatch.value}"]`);
+                await page.click(`.swatches button[value="${swatch.capacity}"]`);
                 await page.waitForSelector('.price.float-end.pull-right');
                 const price = await page.$eval('.price.float-end.pull-right', el => parseFloat(el.textContent.trim().replace('$', '')));
-                swatchesPrices.push({value: parseInt(swatch.value, 10), price});
+                swatchesPrices.push({capacity: parseInt(swatch.capacity, 10), price});
             }
 
             await browser.close();

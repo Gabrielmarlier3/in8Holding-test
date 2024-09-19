@@ -52,6 +52,14 @@ Para iniciar a raspagem de dados e salvar no banco de dados, acesse a rota `/syn
 http://localhost:3000/sync
 ```
 
+você pode usar a url /sync?chunkSize=(numero) para definir o tamanho do chunk que será processado, caso esteja usando um computador mais fraco considere diminuir a chunk, exemplo:
+```bash
+http://localhost:3000/sync?chunkSize=15
+```
+
+
+
+
 ### Obter Produtos
 
 Para obter os produtos armazenados no banco de dados, acesse a rota `/data`, isso pegará oque foi pedido para o teste ( Lenovo ordenado por preço de forma crescente ):

@@ -3,11 +3,14 @@ const {saveAllDataToDatabase, getFilteredData} = require("../service/databaseSer
 
 const syncData = async (req, res) => {
     try {
+        //Essa variavel decide quantas abas do puppets vão ser abertas ao mesmo tempo
+        const chunkSize = parseInt(req.query.chunkSize, 10) || 30;
+
         //Essa função vai buscar todas as paginas de laptops e salvar nessa variavel
         const allData = await dataService.fetchData();
 
         //Essa função vai processar os dados e retornar um array de objetos com os dados tratados
-        const processedData = await dataService.processData(allData);
+        const processedData = await dataService.processData(allData, chunkSize);
 
         //Essa função vai salvar todos os dados no banco de dados
         await saveAllDataToDatabase(processedData);
