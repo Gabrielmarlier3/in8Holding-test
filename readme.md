@@ -40,7 +40,7 @@ Este projeto realiza a raspagem de dados de um site de e-commerce, processa os d
 
 ### Subir os Serviços com Docker Compose
 
-Para iniciar os serviços necessários, execute:
+Para iniciar os serviços necessários, execute (porfavor aguarde antes de fazer a sincronização de dados):
 ```bash
 docker-compose up --build
 ```
