@@ -24,23 +24,15 @@ Este projeto foi desenvolvido e testado em um ambiente windows, porém foi testa
     git clone https://github.com/Gabrielmarlier3/in8Holding-test
     cd seu-repositorio
     ```
-
-2. Instale as dependências:
-    ```bash
-    npm install
+   
+2. Configure as variáveis de ambiente no arquivo `.env`:
+    ```plaintext
+    DB_HOST=localhost
+    DB_USER=seu-usuario
+    DB_PASSWORD=sua-senha
+    DB_NAME=nome-do-banco
+    PORT=3000
     ```
-
-3. Configure o banco de dados:
-    - Crie um banco de dados MySQL.
-    - Configure as variáveis de ambiente no arquivo `.env`:
-        ```plaintext
-        DB_HOST=localhost
-        DB_USER=seu-usuario
-        DB_PASSWORD=sua-senha
-        DB_NAME=nome-do-banco
-        PORT=3000
-        ```
-
 ## Uso
 
 ### Subir os Serviços com Docker Compose
