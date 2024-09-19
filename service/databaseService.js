@@ -9,6 +9,7 @@ const ensureProductsTableExists = async () => {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
                 link VARCHAR(255) NOT NULL,
+                description TEXT,
                 swatchesPrices JSON,
                 reviewCount INT DEFAULT 0,
                 starCount INT DEFAULT 0
@@ -33,8 +34,8 @@ const saveAllDataToDatabase = async (data) => {
 
         // Queries de inserção e verificação de duplicidade
         const insertQuery = `
-            INSERT INTO products (title, link, swatchesPrices, reviewCount, starCount)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO products (title, link, description, swatchesPrices, reviewCount, starCount)
+            VALUES (?, ?, ?, ?, ?, ?)
         `;
         const checkQuery = `
             SELECT * FROM products WHERE title = ? AND link = ?
@@ -49,7 +50,8 @@ const saveAllDataToDatabase = async (data) => {
                 return connection.execute(insertQuery, [
                     item.title,
                     item.link,
-                    JSON.stringify(item.swatchesPrices), // Armazena como JSON
+                    item.description,
+                    JSON.stringify(item.swatchesPrices),
                     item.reviewCount || 0, // Verificação para evitar valores indefinidos
                     item.starCount || 0,   // Verificação para evitar valores indefinidos
                 ]);

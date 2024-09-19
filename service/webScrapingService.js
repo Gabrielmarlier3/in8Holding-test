@@ -107,6 +107,8 @@ const processData = async (data, chunkSize) => {
                 capacity: btn.value, isActive: btn.classList.contains('active')
             })));
 
+            const description = $('p.description.card-text').text().trim();
+
             //aqui eu clico em cada botão de armazenamento e pego o preço de cada um
             for (const swatch of swatches) {
                 await page.click(`.swatches button[value="${swatch.capacity}"]`);
@@ -130,6 +132,7 @@ const processData = async (data, chunkSize) => {
             return {
                 title: item.title,
                 link: url,
+                description: description,
                 swatchesPrices: swatchesPrices,
                 reviewCount: reviewCount,
                 starCount: starCount,
