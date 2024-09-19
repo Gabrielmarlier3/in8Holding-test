@@ -1,6 +1,6 @@
-FROM node:18
+FROM node:18-slim
 
-# Atualizar o sistema e instalar as bibliotecas necessárias
+# Instalar dependências e o Chromium
 RUN apt-get update && apt-get install -y \
   libnss3 \
   libdbus-1-3 \
@@ -15,12 +15,19 @@ RUN apt-get update && apt-get install -y \
   libpangocairo-1.0-0 \
   libpango-1.0-0 \
   libgtk-3-0 \
-  libx11-xcb1
+  libx11-xcb1 \
+  fonts-liberation \
+  xdg-utils \
+  chromium \
+  --no-install-recommends && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Definir o caminho para o Chromium
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-
 RUN npm install
 
 COPY . .
