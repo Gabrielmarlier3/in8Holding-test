@@ -4,7 +4,7 @@ Este projeto realiza a raspagem de dados de um site de e-commerce, processa os d
 
 ## Compatibilidade
 
-Este projeto foi desenvolvido e testado em um ambiente windows, porém foi testado em um macbook pro m3 e funcionou perfeitamente, mas não foi testado em um ambiente linux, entretanto não deve haver problemas.
+Este projeto foi desenvolvido e testado em um ambiente windows, porém foi testado em um macbook pro m3 max e funcionou perfeitamente, mas não foi testado em um ambiente linux, entretanto não deve haver problemas.
 
 ## Tecnologias Utilizadas
 
