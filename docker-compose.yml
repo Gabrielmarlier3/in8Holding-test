@@ -13,7 +13,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       PORT: ${PORT}
-    platform: linux/arm64  # Apenas se for necessário no Mac M1/M2
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
 
   db:
     image: mysql:8.0

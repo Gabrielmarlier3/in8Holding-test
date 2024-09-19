@@ -90,7 +90,14 @@ const processData = async (data, chunkSize) => {
             const browser = await puppeteer.launch({
                 headless: true,
                 //esses args são  para que o puppeteer funcione corretamente no docker
-                args: [`--max-old-space-size=${ramUsePerTab}`, '--no-sandbox', '--disable-setuid-sandbox']
+                args: [
+                    `--max-old-space-size=${ramUsePerTab}`,
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--disable-software-rasterizer'
+                ]
             });
             const page = await browser.newPage();
             await page.goto(url);

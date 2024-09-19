@@ -22,8 +22,6 @@ RUN apt-get update && apt-get install -y \
   --no-install-recommends && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Definir o caminho para o Chromium
-ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
 
 WORKDIR /usr/src/app
 

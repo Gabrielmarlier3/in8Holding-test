@@ -57,19 +57,16 @@ você pode usar a url /sync?chunkSize=(numero) para definir o tamanho do chunk q
 http://localhost:3000/notebook/sync?chunkSize=15
 ```
 
-
-
-
 ### Obter Produtos
 
-Para obter os produtos armazenados no banco de dados, acesse a rota `/notebook/data`, isso pegará oque foi pedido para o teste ( Lenovo ordenado por preço de forma crescente ):
+Para obter os produtos armazenados no banco de dados, acesse a rota `/notebook/get`, isso pegará oque foi pedido para o teste ( Lenovo ordenado por preço de forma crescente ):
 ```bash
-http://localhost:3000/notebook/data
+http://localhost:3000/notebook/get
 ```
 
 Você pode filtrar os produtos e ordenar por preço usando os parâmetros `item` e `orderBy`:
 ```bash
-http://localhost:3000/notebook/data?item=Dell&orderBy=DESC
+http://localhost:3000/notebook/get?item=Dell&orderBy=DESC
 ```
 
 ## Estrutura do Projeto

@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 console.clear()
 
 app.get('/notebook/sync', dataController.syncData);
-app.get('/notebook/data', dataController.getProducts);
+app.get('/notebook/get', dataController.getProducts);
 
 //Cron que vai executar o sync automaticamente a cada 1 hora para manter os dados atualizados
 cron.schedule('0 * * * *', async () => {
