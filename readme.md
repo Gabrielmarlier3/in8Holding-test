@@ -47,14 +47,14 @@ docker-compose up --build
 
 ### Sincronizar Dados
 
-Para iniciar a raspagem de dados e salvar no banco de dados, acesse a rota `/sync` note-se que isso pode ser um pouco demorado (Aproximadamente 2 minutos) :
+Para iniciar a raspagem de dados e salvar no banco de dados, acesse a rota `/notebook/sync` note-se que isso pode ser um pouco demorado (Aproximadamente 2 minutos) :
 ```bash
-http://localhost:3000/sync
+http://localhost:3000/notebook/sync
 ```
 
 você pode usar a url /sync?chunkSize=(numero) para definir o tamanho do chunk que será processado, caso esteja usando um computador mais fraco considere diminuir a chunk, exemplo:
 ```bash
-http://localhost:3000/sync?chunkSize=15
+http://localhost:3000/notebook/sync?chunkSize=15
 ```
 
 
@@ -62,20 +62,20 @@ http://localhost:3000/sync?chunkSize=15
 
 ### Obter Produtos
 
-Para obter os produtos armazenados no banco de dados, acesse a rota `/data`, isso pegará oque foi pedido para o teste ( Lenovo ordenado por preço de forma crescente ):
+Para obter os produtos armazenados no banco de dados, acesse a rota `/notebook/data`, isso pegará oque foi pedido para o teste ( Lenovo ordenado por preço de forma crescente ):
 ```bash
-http://localhost:3000/data
+http://localhost:3000/notebook/data
 ```
 
 Você pode filtrar os produtos e ordenar por preço usando os parâmetros `item` e `orderBy`:
 ```bash
-http://localhost:3000/data?item=Dell&orderBy=DESC
+http://localhost:3000/notebook/data?item=Dell&orderBy=DESC
 ```
 
 ## Estrutura do Projeto
 
 - `app.js`: Configuração do servidor Express.
-- `controller/webScrapingController.js`: Controladores para as rotas da API.
+- `controller/notebookController.js`: Controladores para as rotas da API.
 - `service/webScrapingService.js`: Serviço de raspagem e processamento de dados.
 - `service/databaseService.js`: Serviço de interação com o banco de dados.
 - `db.js`: Configuração da conexão com o banco de dados.
