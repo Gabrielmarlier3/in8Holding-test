@@ -2,6 +2,10 @@
 
 Este projeto realiza a raspagem de dados de um site de e-commerce, processa os dados e os armazena em um banco de dados. Ele também fornece uma API para acessar e filtrar os dados armazenados.
 
+## Compatibilidade
+
+Este projeto foi desenvolvido e testado em um ambiente windows, porém foi testado em um macbook pro m3 e funcionou perfeitamente, mas não foi testado em um ambiente linux, entretanto não deve haver problemas.
+
 ## Tecnologias Utilizadas
 
 - **JavaScript**
@@ -11,6 +15,7 @@ Este projeto realiza a raspagem de dados de um site de e-commerce, processa os d
 - **Cheerio**
 - **Puppeteer**
 - **MySQL**
+- **cron**
 
 ## Instalação
 
