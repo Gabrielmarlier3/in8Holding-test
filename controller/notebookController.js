@@ -15,7 +15,7 @@ const syncData = async (req, res) => {
         //Essa função vai salvar todos os dados no banco de dados
         await saveAllDataToDatabase(processedData);
 
-        return res.status(200).send('Dados salvos no banco de dados, acessar /get para visualizar');
+        return res.status(200).send('Dados salvos no banco de dados, acessar /notebook/get para visualizar');
 
     } catch (error) {
         console.error(error);
